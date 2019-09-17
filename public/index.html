@@ -1,17 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>wyyx</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but wyyx doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=0.5,maximum-scale=0.5,minimum-scale=0.5 user-scalable=no">
+  <title>网易严选</title>
+
+  <link rel="stylesheet" href="/css/reset.css">
+</head>
+
+<body>
+  <div id="app"></div>
+
+
+
+
+  <!--解决点击响应延时0.3s问题-->
+  <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+  <script>
+    if ('addEventListener' in document) {
+      document.addEventListener('DOMContentLoaded', function () {
+        FastClick.attach(document.body);
+      }, false);
+    }
+    if (!window.Promise) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' +
+        '>' + '<' + '/' + 'script>');
+    }
+    // $(document).ready(function () {
+    // //取消浏览器默认行为
+    // document.addEventListener('touchstart', function (event) {
+    //     event.preventDefault();
+    //   }, false)
+    //   //点透
+    //   !(function () {
+    //     let aNodes = document.querySelectorAll('a');
+    //     let i = 0;
+    //     for (; i < aNodes.length; i++) {
+    //       aNodes[i].addEventListener('touchstart', function () {
+    //         window.location = this.href;
+    //       });
+    //     }
+    //   })();
+
+    // // rem适配
+    // window.onload = function () {
+    //   function remRefresh() {
+    //     // 1.获取屏幕的宽度
+    //     let clientWidth = document.documentElement.clientWidth
+    //     // 2.等分屏幕宽度 - 降低单位rem值的大小，便于计算
+    //     let rem = clientWidth / 10
+    //     // 3.设置根节点字体的大小 rem
+    //     document.documentElement.style.fontSize = rem + 'px'
+    //     // 4.给body设置字体大小
+    //     document.body.style.fontSize = '12px'
+    //   }
+    //   window.addEventListener('pageshow', function () {
+    //     remRefresh()
+    //   })
+    //   window.addEventListener('resize', function () {
+    //     remRefresh()
+    //   })
+    // }
+  </script>
+</body>
+
 </html>
