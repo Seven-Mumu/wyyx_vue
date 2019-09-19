@@ -43,6 +43,7 @@
         <li>礼品特色</li>
       </ul>
       <div class="mask"
+           @click="isOpen=!isOpen"
            v-show="isOpen"></div>
     </div>
   </header>

@@ -1,18 +1,16 @@
 <template>
   <div>
-    <HeaderNav />
+
     <router-view></router-view>
     <Footer />
   </div>
 
 </template>
 <script>
-// 引入HeaderNav和footer
-import HeaderNav from './components/HeaderNav/HeaderNav'
+// footer
 import Footer from './components/Footer/Footer'
 export default {
   components: {
-    HeaderNav,
     Footer
   }
 }

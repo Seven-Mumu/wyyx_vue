@@ -10,19 +10,31 @@ export default [{
   },
   {
     path: '/msite',
-    component: Msite
+    component: Msite,
+    meta: {
+      isShowFooter: true
+    }
   },
   {
     path: '/category',
-    component: Category
+    component: Category,
+    meta: {
+      isShowFooter: true
+    }
   },
   {
     path: '/things',
-    component: Things
+    component: Things,
+    meta: {
+      isShowFooter: true
+    }
   },
   {
     path: '/shopcar',
-    component: ShopCar
+    component: ShopCar,
+    meta: {
+      isShowFooter: true
+    }
   },
   {
     path: '/personal',

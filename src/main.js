@@ -6,6 +6,9 @@ import router from './router'
 
 // rem适配库
 import 'lib-flexible/flexible'
+// 全局组件
+import HeaderPersonal from './components/HeaderPersonal/HeaderPersonal'
+Vue.component('HeaderPersonal', HeaderPersonal)
 
 Vue.config.productionTip = false
 

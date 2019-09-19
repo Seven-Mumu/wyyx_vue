@@ -1,5 +1,6 @@
 <template>
-  <div class="footerContainer">
+  <div class="footerContainer"
+       v-show="$route.meta.isShowFooter">
     <ul class="footerUl">
       <li class="item"
           :class="{active:$route.path==='/msite'}"
