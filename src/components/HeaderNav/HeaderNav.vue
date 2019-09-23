@@ -1,8 +1,9 @@
 <template>
   <header class="headerContainer">
     <div class="header">
-      <div class="logo"></div>
-      <span class="search">
+      <div class="Imglogo"></div>
+      <span class="Headersearch"
+            @click="$router.push('/search')">
         <span class="searchImg"></span>
         搜索商品，共22717款好物
       </span>
@@ -10,16 +11,13 @@
     </div>
     <div class="headerNavLeft"
          v-show="!isOpen">
-      <ul class="leftNav">
-        <li class="active">推荐</li>
-        <li>居家生活</li>
-        <li>服饰鞋包</li>
-        <li>美食酒水</li>
-        <li>个护清洁</li>
-        <li>母婴亲子</li>
-        <li>运动旅行</li>
-        <li>数码家电</li>
-        <li>全球特色</li>
+      <ul class="headerNavUl"
+          ref="leftNavUl">
+        <li class="headerNavLi"
+            v-for="(nav,index) in homeNav"
+            :key="index"
+            @click="toNavItem(index)"><a href="javascript:;"
+             :class="{active:select===index}">{{nav.text}}</a></li>
       </ul>
     </div>
     <div class="headerNavRight">
@@ -32,15 +30,10 @@
          v-show="isOpen">
       <span class="allList">全部频道</span>
       <ul class="navList">
-        <li class="active">推荐</li>
-        <li>居家生活</li>
-        <li>服饰鞋包</li>
-        <li>美食酒水</li>
-        <li>个户清洁</li>
-        <li>母婴亲子</li>
-        <li>运动旅行</li>
-        <li>数码家电</li>
-        <li>礼品特色</li>
+        <li @click="toNavItem(index)"
+            :class="{active:select===index}"
+            v-for="(item,index) in homeNav"
+            :key="index">{{item.text}}</li>
       </ul>
       <div class="mask"
            @click="isOpen=!isOpen"
@@ -50,23 +43,50 @@
 </template>
 <script>
 import BScroll from 'better-scroll'
+import { mapState } from 'vuex'
 export default {
+  computed: {
+    ...mapState({
+      homeNav: state => state.home.homeNav,
+
+    })
+  },
   data () {
     return {
-      isOpen: false
+      isOpen: false,
+      select: 0,
+
     }
   },
   methods: {
     handleClick () {
       this.isOpen = !this.isOpen
+    },
+    toNavItem (index) {
+      this.select = index
     }
   },
   mounted () {
+    // console.log(this.homeNav.kingKongModule.kingKongList)
     this.$nextTick(() => {
-      new BScroll('.headerNavLeft', {
-        scrollX: true,
-        click: true
-      })
+      // const list = this.$refs.leftNavUl.children
+      // let width = 0
+      // Array.prototype.slice.call(list).forEach(li => {
+      //   width += li.clientWidth
+      // })
+      // width = width + list.length * 50
+      // const leftNav = document.querySelector('.leftNav')
+      // leftNav.style.width = width + 'px'
+      // console.log(width)
+      if (!this.bscroll) {
+        this.bscroll = new BScroll('.headerNavLeft', {
+          scrollX: true,
+          click: true,
+          bounce: false
+        })
+      } else {
+        this.bscroll.refresh()
+      }
     }
     )
   },
@@ -74,6 +94,7 @@ export default {
 </script>
 
 <style lang='stylus' rel='stylesheet/stylus'>
+@import '../../common/stylus/mixins'
 .headerContainer
   width 100%
   position fixed
@@ -85,13 +106,13 @@ export default {
     display flex
     align-items center
     background-color #fff
-    .logo
+    .Imglogo
       width 138px
       height 40px
       background-image url('http://yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/indexLogo-a90bdaae6b.png')
       background-repeat no-repeat
       margin-right 20px
-    .search
+    .Headersearch
       width 442px
       height 56px
       background-color #ededed
@@ -118,35 +139,30 @@ export default {
       font-size 24px
       margin-left 16px
   .headerNavLeft
-    width 630px
-    height 60px
+    // width 630px
+    height 72px
     overflow hidden
     background-color #fff
-    .leftNav
-      width 1410px
-      height 60px
-      font-size 27px
-      line-height 60px
+    // display flex
+    .headerNavUl
+      float left
+      padding-right 150px
       display flex
-      &::after
-        content ''
-        display block
-        clear both
-      >li
-        // float left
-        // height 50px
-        margin 0 15px
-        padding 0 10px
-        // text-align center
+      .headerNavLi
         display flex
-        align-items center
         justify-content center
-        // border 4px solid red
-        &.active
-          border-bottom 4px solid #b4282d
+        align-items center
+        box-sizing border-box
+        padding 0 16px
+        text-align center
+        font-size 28px
+        line-height 60px
+        width 145px
+        >a
+          color #333
+        a.active
           color #b4282d
-        &:first-child
-          width 88px
+          border-bottom 4px solid #b4282d
   .headerNavRight
     width 150px
     height 60px

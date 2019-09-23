@@ -27,7 +27,7 @@ module.exports = {
     proxy: {
       // 请求地址以/api开头
       '/api': {
-        target: 'http://localhost:5000', // 转发的目录地址
+        target: 'http://m.you.163.com', // 转发的目录地址
         changeOrigin: true, // 支持跨域
         pathRewrite: { // 重写路径: 让代理服务在转发请求, 对路径进行特定修改
           '^/api': '', // 去掉路径中的/api
@@ -43,16 +43,28 @@ module.exports = {
     }
   },
   // 第三方库实现适配
-  chainWebpack: config => {
-    config.module
-      .rule('css')
-      .test(/\.css$/)
-      .oneOf('vue')
-      .resourceQuery(/\?vue/)
-      .use('px2rem')
-      .loader('px2rem-loader')
-      .options({
-        remUnit: 75 // 此处需要根据设计稿的宽度来设置  设计稿的宽度/10 
-      })
+  // chainWebpack: config => {
+  //   config.module
+  //     .rule('css')
+  //     .test(/\.css$/)
+  //     .oneOf('vue')
+  //     .resourceQuery(/\?vue/)
+  //     .use('px2rem')
+  //     .loader('px2rem-loader')
+  //     .options({
+  //       remUnit: 75 // 此处需要根据设计稿的宽度来设置  设计稿的宽度/10 
+  //     })
+  // }
+  css: {
+    loaderOptions: {
+      css: {},
+      postcss: {
+        plugins: [
+          require('postcss-px2rem')({
+            remUnit: 75
+          })
+        ]
+      }
+    }
   }
 }

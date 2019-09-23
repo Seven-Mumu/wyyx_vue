@@ -1,77 +1,45 @@
 <template>
   <div class="categoryContainer">
-    <div class="searchSpan">
+    <div class="searchSpan"
+         @click="$router.push('/search')">
       <div class="search">
         <span class="searchImg"></span>
         搜索商品，共22717款好物
       </div>
     </div>
     <div class="wrap">
-      <!-- 左侧菜单列表 -->
-      <ul class="categoryList">
-        <li class="active">推荐专区</li>
-        <li>换季专区</li>
-        <li>爆品专区</li>
-        <li>新品专区</li>
-        <li>居家生活</li>
-        <li>服饰鞋包</li>
-        <li>美食酒水</li>
-        <li>个护清洁</li>
-        <li>母婴亲子</li>
-        <li>运动旅行</li>
-        <li>数码家电</li>
-        <li>全球特色</li>
-      </ul>
+      <div class="leftWrapper">
+        <!-- 左侧菜单列表 -->
+        <ul class="categoryList"
+            ref="leftUl">
+          <li :class="{active:select===index}"
+              @click="toItems(index)"
+              v-for="(category,index) in categorys.categoryL1List">{{category.name}}</li>
+        </ul>
+      </div>
       <!-- 右侧商品列表 -->
       <div class="list">
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="https://yanxuan.nosdn.127.net/1eba77c8f34e1498b83cabca593f3a3f.jpg?imageView&quality=75&thumbnail=750x0"
-                   alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="https://yanxuan.nosdn.127.net/ccfde8af22184921682d049b00b34be2.jpg?imageView&quality=75&thumbnail=750x0"
-                   alt="">
-            </div>
-            <div class="swiper-slide">
-              <img src="https://yanxuan.nosdn.127.net/e03c9b74a854d4c31c77720dc1e8433a.jpg?imageView&quality=75&thumbnail=750x0"
-                   alt="">
+        <div class="rightUl">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"
+                   v-for="(category,index) in categorys.categoryL1List"
+                   :key="index">
+                <img :src="category.wapBannerUrl"
+                     alt="">
+              </div>
             </div>
           </div>
+
+          <ul class="listAll">
+            <li v-for="(category,index) in categoryObj.subCateList">
+              <img :src="category.bannerUrl"
+                   alt="">
+              <span>{{category.name}}</span>
+            </li>
+          </ul>
         </div>
-        <ul class="listAll">
-          <li>
-            <img src="https://yanxuan.nosdn.127.net/71a5f1a0299e278f8193c193d8b7d1e4.png?imageView&quality=85&thumbnail=144x144"
-                 alt="">
-            <span>明星商品</span>
-          </li>
-          <li>
-            <img src="https://yanxuan.nosdn.127.net/71a5f1a0299e278f8193c193d8b7d1e4.png?imageView&quality=85&thumbnail=144x144"
-                 alt="">
-            <span>精选美食99选6</span>
-          </li>
-          <li>
-            <img src="https://yanxuan.nosdn.127.net/71a5f1a0299e278f8193c193d8b7d1e4.png?imageView&quality=85&thumbnail=144x144"
-                 alt="">
-            <span>男装季末特惠</span>
-          </li>
-          <li>
-            <img src="https://yanxuan.nosdn.127.net/71a5f1a0299e278f8193c193d8b7d1e4.png?imageView&quality=85&thumbnail=144x144"
-                 alt="">
-            <span>员工精选好货</span>
-          </li>
-          <li>
-            <img src="https://yanxuan.nosdn.127.net/71a5f1a0299e278f8193c193d8b7d1e4.png?imageView&quality=85&thumbnail=144x144"
-                 alt="">
-            <span>家装好物推荐</span>
-          </li>
-          <li>
-            <img src="https://yanxuan.nosdn.127.net/71a5f1a0299e278f8193c193d8b7d1e4.png?imageView&quality=85&thumbnail=144x144"
-                 alt="">
-            <span>999+好评</span>
-          </li>
-        </ul>
+
       </div>
     </div>
   </div>
@@ -80,13 +48,56 @@
 // 引入swiper包
 import Swiper from "swiper"
 import "swiper/dist/css/swiper.css"
+// 引入bscroll
+import BScroll from 'better-scroll'
+import { mapState } from 'vuex'
 export default {
-  mounted () {
+  data () {
+    return {
+      select: 0,
+      categoryObj: {}
+    }
+  },
+  methods: {
+    toItems (index) {
+      this.select = index
+      this.categoryObj = this.categorys.categoryL1List[index]
+    }
+  },
+  computed: {
+    ...mapState({
+      categorys: state => state.category.categorys,
+    })
+  },
+  async mounted () {
+    console.log(this.categorys)
+    await this.$store.dispatch('getCategorys')
+    this.categoryObj = this.categorys.categoryL1List[0]
     this.$nextTick(() => {
       new Swiper(".swiper-container", {
         loop: true, // 循环模式选项
         autoplay: true
       })
+
+      // 左侧列表滑动
+      const categoryList = this.$refs.leftUl
+      const list = categoryList.children
+      let height = list.length * 49 + list.length * 40 - 20
+      categoryList.style.height = height + 'px'
+      if (!this.bscroll) {
+        this.bscroll = new BScroll('.leftWrapper', {
+          click: true
+        })
+      } else {
+        this.bscroll.refresh()
+      }
+
+      // 右侧详细信息列表滑动
+      this.bscrollRight = new BScroll('.list', {
+        click: true
+      })
+
+
     })
   }
 }
@@ -94,6 +105,8 @@ export default {
 
 <style lang='stylus' rel='stylesheet/stylus'>
 .categoryContainer
+  height 1800px
+  background-color #fff
   .searchSpan
     height 88px
     padding 0 30px
@@ -104,6 +117,7 @@ export default {
     display flex
     align-items center
     position relative
+    z-index 2
     &:after
       content ''
       display block
@@ -131,10 +145,11 @@ export default {
         background-repeat no-repeat
   .wrap
     position relative
-    .categoryList
+    .leftWrapper
       width 162px
-      height 1120px
-      padding 40px 0
+      max-height 1144px
+    .categoryList
+      width 100%
       li
         margin-top 40px
         width 100%
@@ -146,7 +161,7 @@ export default {
           border-left 4px solid #ab2b2b
           color #ab2b2b
         &:first-child
-          margin-top 0
+          margin-top 20px
     .list
       height 100%
       padding 30px 30px 21px
@@ -160,7 +175,7 @@ export default {
         height 192px
         img
           width 100%
-          height 100%
+          height auto
     .listAll
       display flex
       flex-wrap wrap
@@ -174,6 +189,9 @@ export default {
         align-items center
         &:nth-child(3n+3)
           margin-right 0
+        img
+          width 144px
+          height 144px
         span
           height 0.96rem
           font-size 0.32rem

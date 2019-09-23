@@ -1,10 +1,11 @@
 <template>
   <div>
-    <header class="header">
-      <span class="logo"></span>
+    <header class="headerPersonal">
+      <span class="logoPersonal"
+            @click="$router.replace('/msite')"></span>
       <slot name="title"></slot>
-      <span class="search"></span>
-      <span class="shopCar"></span>
+      <span class="searchPersonal"></span>
+      <span class="shopCarPersonal"></span>
     </header>
   </div>
 </template>
@@ -14,21 +15,21 @@ export default {
 </script>
 
 <style lang='stylus' rel='stylesheet/stylus'>
-.header
+.headerPersonal
   width 100%
   height 88px
   background-color #fff
   padding 0 16px 0 24px
   box-sizing border-box
   line-height 88px
-  .logo
+  .logoPersonal
     width 48px
     height 75px
     display inline-block
     background-image url('//yanxuan-static.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/sprites/hd-s9f33319f5a-b1aa4c35e6.png')
     background-repeat no-repeat
     background-position 0 -55px
-  .search
+  .searchPersonal
     width 75px
     height 75px
     display inline-block
@@ -38,7 +39,7 @@ export default {
     position absolute
     top 0
     right 110px
-  .shopCar
+  .shopCarPersonal
     width 75px
     height 75px
     display inline-block

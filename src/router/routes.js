@@ -3,6 +3,8 @@ import Category from '../pages/Category/Category'
 import Things from '../pages/Things/Things'
 import ShopCar from '../pages/ShopCar/ShopCar'
 import Personal from '../pages/Personal/Personal'
+import Search from '../pages/Msite/Search/Search'
+import PhoneLogin from '../pages/Personal/PhoneLogin/PhoneLogin'
 
 export default [{
     path: '/',
@@ -14,6 +16,10 @@ export default [{
     meta: {
       isShowFooter: true
     }
+  },
+  {
+    path: '/search',
+    component: Search
   },
   {
     path: '/category',
@@ -39,5 +45,9 @@ export default [{
   {
     path: '/personal',
     component: Personal
+  },
+  {
+    path: '/phonelogin',
+    component: PhoneLogin
   }
 ]

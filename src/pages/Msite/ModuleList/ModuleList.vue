@@ -40,6 +40,7 @@ export default {
 .moudleList
   width 100%
   height 654px
+  margin-bottom 20px
   .title
     width 100%
     height 100px

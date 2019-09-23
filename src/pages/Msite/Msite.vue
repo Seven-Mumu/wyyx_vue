@@ -25,6 +25,8 @@
         <SwiperList />
         <NewPerson />
         <ModuleList />
+        <HotSell />
+        <TimeBuy />
         <CategoryList />
         <div class="footer">
           <div class="btn">
@@ -47,14 +49,26 @@ import SwiperList from './SwiperList/SwiperList'
 import NewPerson from './NewPerson/NewPerson'
 import ModuleList from './ModuleList/ModuleList'
 import CategoryList from './CategoryList/CategoryList'
+import HotSell from './HotSell/HotSell'
+import TimeBuy from './TimeBuy/TimeBuy'
 
 // 引入better-scroll
 import BScroll from 'better-scroll'
+import { mapState } from 'vuex'
 export default {
-  mounted () {
+  computed: {
+    ...mapState({
+      homeNav: state => state.home.homeNav,
+      homeItems: state => state.home.homeItems
+    })
+  },
+  async mounted () {
+    await this.$store.dispatch('getHomeNav')
+    await this.$store.dispatch('getHomeItems')
+    console.log(this.homeItems)
     this.$nextTick(() => {
       const height = document.documentElement.clientHeight
-      console.log(height)
+      // console.log(height)
       const wraper = document.querySelector('.wraper')
       wraper.style.height = height + 'px'
       if (!this.bscroll) {
@@ -71,7 +85,9 @@ export default {
     NewPerson,
     ModuleList,
     CategoryList,
-    HeaderNav
+    HeaderNav,
+    HotSell,
+    TimeBuy
   }
 }
 </script>
