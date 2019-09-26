@@ -19,10 +19,10 @@
         <span>分类</span>
       </li>
       <li class="item"
-          :class="{active:$route.path==='/things'}"
+          :class="{active:$route.path==='/things/find'||$route.path==='/things/zxj'}"
           @click="goto('/things')">
         <div class="icon-img "
-             :class="$route.path==='/things'?'icon3-active':'icon-img3'">
+             :class="$route.path==='/things/find'||$route.path==='/things/zxj'?'icon3-active':'icon-img3'">
         </div>
         <span>识物</span>
       </li>

@@ -3,72 +3,22 @@
     <div class="timeBuyHeader">
       <span class="title">限时购</span>
       <div class="timer">
-        <span class="num">03</span>:
-        <span class="num">04</span>:
-        <span class="num">05</span>
+        <span class="num">{{h}}</span>:
+        <span class="num">{{m}}</span>:
+        <span class="num">{{s}}</span>
       </div>
       <span class="more">更多 ></span>
     </div>
     <div class="timeBuyContent">
       <ul>
-        <li>
+        <li v-for="(item,index) in homeTimeBuy.itemList">
           <div class="picture">
-            <img src="https://yanxuan-item.nosdn.127.net/da8d784e8f44d736dac03905cf4162ef.png?imageView&thumbnail=216x216&quality=75"
+            <img :src="item.picUrl"
                  alt="">
           </div>
           <div class="price">
-            <span class="newPrice">￥29</span>
-            <span class="oldPrice">￥36</span>
-          </div>
-        </li>
-        <li>
-          <div class="picture">
-            <img src="https://yanxuan-item.nosdn.127.net/da8d784e8f44d736dac03905cf4162ef.png?imageView&thumbnail=216x216&quality=75"
-                 alt="">
-          </div>
-          <div class="price">
-            <span class="newPrice">￥29</span>
-            <span class="oldPrice">￥36</span>
-          </div>
-        </li>
-        <li>
-          <div class="picture">
-            <img src="https://yanxuan-item.nosdn.127.net/da8d784e8f44d736dac03905cf4162ef.png?imageView&thumbnail=216x216&quality=75"
-                 alt="">
-          </div>
-          <div class="price">
-            <span class="newPrice">￥29</span>
-            <span class="oldPrice">￥36</span>
-          </div>
-        </li>
-        <li>
-          <div class="picture">
-            <img src="https://yanxuan-item.nosdn.127.net/da8d784e8f44d736dac03905cf4162ef.png?imageView&thumbnail=216x216&quality=75"
-                 alt="">
-          </div>
-          <div class="price">
-            <span class="newPrice">￥29</span>
-            <span class="oldPrice">￥36</span>
-          </div>
-        </li>
-        <li>
-          <div class="picture">
-            <img src="https://yanxuan-item.nosdn.127.net/da8d784e8f44d736dac03905cf4162ef.png?imageView&thumbnail=216x216&quality=75"
-                 alt="">
-          </div>
-          <div class="price">
-            <span class="newPrice">￥29</span>
-            <span class="oldPrice">￥36</span>
-          </div>
-        </li>
-        <li>
-          <div class="picture">
-            <img src="https://yanxuan-item.nosdn.127.net/da8d784e8f44d736dac03905cf4162ef.png?imageView&thumbnail=216x216&quality=75"
-                 alt="">
-          </div>
-          <div class="price">
-            <span class="newPrice">￥29</span>
-            <span class="oldPrice">￥36</span>
+            <span class="newPrice">￥{{item.activityPrice}}</span>
+            <span class="oldPrice">￥{{item.originPrice}}</span>
           </div>
         </li>
       </ul>
@@ -76,7 +26,56 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
+  computed: {
+    ...mapState({
+      homeTimeBuy: state => state.home.homeTimeBuy
+    })
+  },
+  data () {
+    return {
+      h: '',
+      m: '',
+      s: ''
+    }
+  },
+  async mounted () {
+    await this.$store.dispatch('getTimeBuy')
+    // 倒计时
+    setInterval(() => {
+      // 获取当前时间
+      var date = new Date();
+      var now = date.getTime();
+      //设置截止时间
+      var endDate = new Date("2019-11-24 23:59:59");
+      var end = endDate.getTime();
+      //时间差
+      var leftTime = end - now;
+      //定义变量 d,h,m,s保存倒计时的时间
+      if (leftTime >= 0) {
+        // this.day = parseInt(leftTime / 1000 / 60 / 60 / 24, 10)
+        const h = Math.floor((leftTime / 1000 / 60 / 60) % 24);
+        if (h < 10) {
+          this.h = `0${h}`
+        } else {
+          this.h = h
+        }
+        const m = Math.floor((leftTime / 1000 / 60) % 60);
+        if (m < 10) {
+          this.m = `0${m}`
+        } else {
+          this.m = m
+        }
+        const s = Math.floor((leftTime / 1000) % 60);
+        if (s < 10) {
+          this.s = `0${s}`
+        } else {
+          this.s = s
+        }
+      }
+    }, 1000);
+  },
 }
 </script>
 

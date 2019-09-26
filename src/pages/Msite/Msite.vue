@@ -2,7 +2,6 @@
   <div class="msiteContainer">
     <HeaderNav />
     <div class="wraper">
-
       <div style="padding-bottom: 260px">
         <Swiper />
         <ul class="textUl">
@@ -24,10 +23,10 @@
         </ul>
         <SwiperList />
         <NewPerson />
-        <ModuleList />
+        <ModuleList :tagList="homeItems.tagList" />
         <HotSell />
-        <TimeBuy />
-        <CategoryList />
+        <TimeBuy :homeTimeBuy="homeItems.flashSaleModule" />
+        <CategoryList :listArr="homeItems.newItemList" />
         <div class="footer">
           <div class="btn">
             <span>下载App</span>
@@ -43,9 +42,10 @@
   </div>
 </template>
 <script>
+const SwiperList = () => import('./SwiperList/SwiperList')
 import HeaderNav from '../../components/HeaderNav/HeaderNav'
 import Swiper from './Swiper/Swiper'
-import SwiperList from './SwiperList/SwiperList'
+// import SwiperList from './SwiperList/SwiperList'
 import NewPerson from './NewPerson/NewPerson'
 import ModuleList from './ModuleList/ModuleList'
 import CategoryList from './CategoryList/CategoryList'
@@ -74,7 +74,8 @@ export default {
       if (!this.bscroll) {
         this.bscroll = new BScroll('.wraper', {
           scrollY: true,
-          click: true
+          click: true,
+          mouseWheel: true
         })
       }
     })

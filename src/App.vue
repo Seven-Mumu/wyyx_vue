@@ -9,13 +9,17 @@
 <script>
 // footer
 import Footer from './components/Footer/Footer'
+import { reqAutoRecommendData } from './api'
 export default {
   components: {
     Footer
   },
-  // mounted () {
-  //   this.$store.dispatch('getHomeNav')
-  // },
+  mounted () {
+    // const result = await reqAutoRecommendData(1, 5)
+    // console.log(result)
+    // this.$store.dispatch('getFindData', { page: 1, size: 5 })
+    // this.$store.dispatch('getTabs')
+  },
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="HotSellContainer">
-    <div class="hotSellHeader">类目热销榜</div>
+    <div class="hotSellHeader">{{homeHotSell.title}}</div>
     <div class="hotSellContent">
       <div class="hotSellTop">
         <div class="topLeft">
@@ -15,44 +15,10 @@
         </div>
       </div>
       <ul class="hotSellBottom">
-        <li>
-          <div class="text">居家生活榜</div>
-          <img src="https://yanxuan-item.nosdn.127.net/c0b3d87a8066b33c68294ce60f8e1920.png?imageView&quality=65&thumbnail=200x200"
-               alt="">
-        </li>
-        <li>
-          <div class="text">居家生活榜</div>
-          <img src="https://yanxuan-item.nosdn.127.net/c0b3d87a8066b33c68294ce60f8e1920.png?imageView&quality=65&thumbnail=200x200"
-               alt="">
-        </li>
-        <li>
-          <div class="text">居家生活榜</div>
-          <img src="https://yanxuan-item.nosdn.127.net/c0b3d87a8066b33c68294ce60f8e1920.png?imageView&quality=65&thumbnail=200x200"
-               alt="">
-        </li>
-        <li>
-          <div class="text">居家生活榜</div>
-          <img src="https://yanxuan-item.nosdn.127.net/c0b3d87a8066b33c68294ce60f8e1920.png?imageView&quality=65&thumbnail=200x200"
-               alt="">
-        </li>
-        <li>
-          <div class="text">居家生活榜</div>
-          <img src="https://yanxuan-item.nosdn.127.net/c0b3d87a8066b33c68294ce60f8e1920.png?imageView&quality=65&thumbnail=200x200"
-               alt="">
-        </li>
-        <li>
-          <div class="text">居家生活榜</div>
-          <img src="https://yanxuan-item.nosdn.127.net/c0b3d87a8066b33c68294ce60f8e1920.png?imageView&quality=65&thumbnail=200x200"
-               alt="">
-        </li>
-        <li>
-          <div class="text">居家生活榜</div>
-          <img src="https://yanxuan-item.nosdn.127.net/c0b3d87a8066b33c68294ce60f8e1920.png?imageView&quality=65&thumbnail=200x200"
-               alt="">
-        </li>
-        <li>
-          <div class="text">居家生活榜</div>
-          <img src="https://yanxuan-item.nosdn.127.net/c0b3d87a8066b33c68294ce60f8e1920.png?imageView&quality=65&thumbnail=200x200"
+        <li v-for="(item,index) in homeHotSell.categoryList"
+            :key="index">
+          <div class="text">{{item.categoryName}}</div>
+          <img :src="item.picUrl"
                alt="">
         </li>
       </ul>
@@ -60,14 +26,23 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
+  computed: {
+    ...mapState({
+      homeHotSell: state => state.home.homeHotSell
+    })
+  },
+  async mounted () {
+    await this.$store.dispatch('getHomeHotSell')
+  },
 }
 </script>
 
 <style lang='stylus' rel='stylesheet/stylus'>
 .HotSellContainer
   width 100%
-  height 710px
+  // height 710px
   margin-bottom 20px
   background-color #fff
   .hotSellHeader
@@ -80,7 +55,7 @@ export default {
     line-height 100px
   .hotSellContent
     width 100%
-    height 610px
+    // height 610px
     padding 0 20px 20px 30px
     box-sizing border-box
     .hotSellTop

@@ -4,6 +4,7 @@
       <span slot="title"
             class="titleText"></span>
     </HeaderPersonal>
+    <router-view></router-view>
     <div class="loginType">
       <div class="img">
         <div class="imgLogin">
@@ -11,15 +12,29 @@
                alt="">
         </div>
         <div class="btn">
-          <div class="phone"
-               @click="$router.replace('/phonelogin')">
+          <router-link to="/personal/phonelogin/1">
+            <div class="phone">
+              <span class="phoneImg"></span>
+              <span class="phoneText">手机号快捷登录</span>
+            </div>
+          </router-link>
+          <!-- <div class="phone"
+               @click="$router.push('/personal/phonelogin')">
             <span class="phoneImg"></span>
             <span class="phoneText">手机号快捷登录</span>
           </div>
-          <div class="email">
+          <div class="email"
+               @click="$router.push('/personal/emaillogin')">
             <span class="emailImg"></span>
             <span class="emailText">邮箱账号登录</span>
-          </div>
+          </div> -->
+          <router-link to="/personal/emaillogin">
+            <div class="email">
+              <span class="emailImg"></span>
+              <span class="emailText">邮箱账号登录</span>
+            </div>
+          </router-link>
+
         </div>
       </div>
       <div class="wechat">

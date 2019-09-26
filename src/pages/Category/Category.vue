@@ -1,15 +1,19 @@
 <template>
   <div class="categoryContainer">
+    <router-view></router-view>
     <div class="searchSpan"
-         @click="$router.push('/search')">
+         @click="$router.push('/search')"
+         v-show="$route.path==='/category'">
       <div class="search">
         <span class="searchImg"></span>
         搜索商品，共22717款好物
       </div>
     </div>
-    <div class="wrap">
+
+    <div class="wrap"
+         v-show="$route.path==='/category'">
+      <!-- 左侧菜单列表 -->
       <div class="leftWrapper">
-        <!-- 左侧菜单列表 -->
         <ul class="categoryList"
             ref="leftUl">
           <li :class="{active:select===index}"
@@ -18,7 +22,8 @@
         </ul>
       </div>
       <!-- 右侧商品列表 -->
-      <div class="list">
+      <div class="list"
+           ref="rightD">
         <div class="rightUl">
           <div class="swiper-container">
             <div class="swiper-wrapper">
@@ -32,10 +37,13 @@
           </div>
 
           <ul class="listAll">
-            <li v-for="(category,index) in categoryObj.subCateList">
-              <img :src="category.bannerUrl"
-                   alt="">
-              <span>{{category.name}}</span>
+            <li v-for="(category,index) in categoryObj.subCateList"
+                :key="index">
+              <router-link :to="`/category/shop/${index}`">
+                <img :src="category.bannerUrl"
+                     alt="">
+                <span>{{category.name}}</span>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -69,8 +77,9 @@ export default {
       categorys: state => state.category.categorys,
     })
   },
+
   async mounted () {
-    console.log(this.categorys)
+    // console.log(this.categorys)
     await this.$store.dispatch('getCategorys')
     this.categoryObj = this.categorys.categoryL1List[0]
     this.$nextTick(() => {
@@ -93,9 +102,17 @@ export default {
       }
 
       // 右侧详细信息列表滑动
-      this.bscrollRight = new BScroll('.list', {
-        click: true
-      })
+      const rightD = this.$refs.rightD
+      const h = document.documentElement.clientHeight - 100
+      rightD.style.height = h + 'px'
+      if (!this.bscrollRight) {
+        this.bscrollRight = new BScroll('.list', {
+          click: true
+        })
+      } else {
+        this.bscrollRight.refresh()
+      }
+
 
 
     })
@@ -163,8 +180,8 @@ export default {
         &:first-child
           margin-top 20px
     .list
-      height 100%
-      padding 30px 30px 21px
+      // height 100%
+      padding 30px 30px 20px
       width 588px
       box-sizing border-box
       position absolute
@@ -175,33 +192,35 @@ export default {
         height 192px
         img
           width 100%
-          height auto
-    .listAll
-      display flex
-      flex-wrap wrap
-      >li
-        width 144px
-        height 216px
-        margin-right 30px
-        display flex
-        flex-direction column
-        justify-content center
-        align-items center
-        &:nth-child(3n+3)
-          margin-right 0
-        img
-          width 144px
-          height 144px
-        span
-          height 0.96rem
-          font-size 0.32rem
-          color #333
-          text-align center
-          line-height 0.48rem
-          display -webkit-box
-          -webkit-line-clamp 2
-          -webkit-box-orient vertical
-          overflow hidden
-          text-overflow ellipsis
+          height 192px
+      .rightUl
+        .listAll
+          padding-bottom 200px
+          display flex
+          flex-wrap wrap
+          >li
+            width 144px
+            height 216px
+            margin-right 30px
+            display flex
+            flex-direction column
+            justify-content center
+            align-items center
+            &:nth-child(3n+3)
+              margin-right 0
+            img
+              width 144px
+              height 144px
+            span
+              height 0.96rem
+              font-size 0.32rem
+              color #333
+              text-align center
+              line-height 0.48rem
+              display -webkit-box
+              -webkit-line-clamp 2
+              -webkit-box-orient vertical
+              overflow hidden
+              text-overflow ellipsis
 </style>
  

@@ -4,60 +4,21 @@
            alt=""> -->
     <div class="banner"></div>
     <ul class="category">
-      <li>
+      <li v-for="(item,index) in listArr"
+          :key="index">
         <img src="https://yanxuan-item.nosdn.127.net/4f565a9e1237af5c34812ac4d4f473ec.jpg?imageView&quality=65&thumbnail=330x330"
              alt="">
         <span class="span1">网易云音乐联名款W800X头戴式蓝牙耳机</span>
         <span class="span2">￥199</span>
       </li>
-      <li>
-        <img src="https://yanxuan-item.nosdn.127.net/4f565a9e1237af5c34812ac4d4f473ec.jpg?imageView&quality=65&thumbnail=330x330"
-             alt="">
-        <span class="span1">网易云音乐联名款W800X头戴式蓝牙耳机</span>
-        <span class="span2">￥199</span>
-      </li>
-      <li>
-        <img src="https://yanxuan-item.nosdn.127.net/4f565a9e1237af5c34812ac4d4f473ec.jpg?imageView&quality=65&thumbnail=330x330"
-             alt="">
-        <span class="span1">网易云音乐联名款W800X头戴式蓝牙耳机</span>
-        <span class="span2">￥199</span>
-      </li>
-      <li>
-        <img src="https://yanxuan-item.nosdn.127.net/4f565a9e1237af5c34812ac4d4f473ec.jpg?imageView&quality=65&thumbnail=330x330"
-             alt="">
-        <span class="span1">网易云音乐联名款W800X头戴式蓝牙耳机</span>
-        <span class="span2">￥199</span>
-      </li>
-      <li>
-        <img src="https://yanxuan-item.nosdn.127.net/4f565a9e1237af5c34812ac4d4f473ec.jpg?imageView&quality=65&thumbnail=330x330"
-             alt="">
-        <span class="span1">网易云音乐联名款W800X头戴式蓝牙耳机</span>
-        <span class="span2">￥199</span>
-      </li>
-      <li>
-        <img src="https://yanxuan-item.nosdn.127.net/4f565a9e1237af5c34812ac4d4f473ec.jpg?imageView&quality=65&thumbnail=330x330"
-             alt="">
-        <span class="span1">网易云音乐联名款W800X头戴式蓝牙耳机</span>
-        <span class="span2">￥199</span>
-      </li>
-      <li>
-        <img src="https://yanxuan-item.nosdn.127.net/4f565a9e1237af5c34812ac4d4f473ec.jpg?imageView&quality=65&thumbnail=330x330"
-             alt="">
-        <span class="span1">网易云音乐联名款W800X头戴式蓝牙耳机</span>
-        <span class="span2">￥199</span>
-      </li>
-      <li>
-        <img src="https://yanxuan-item.nosdn.127.net/4f565a9e1237af5c34812ac4d4f473ec.jpg?imageView&quality=65&thumbnail=330x330"
-             alt="">
-        <span class="span1">网易云音乐联名款W800X头戴式蓝牙耳机</span>
-        <span class="span2">￥199</span>
-      </li>
-
     </ul>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    listArr: Array
+  }
 }
 </script>
 

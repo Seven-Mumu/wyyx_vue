@@ -83,7 +83,6 @@ export default {
 .phoneLoginContainer
   background-color #fff
   height 1500px
-  // margin-top -46px
   .phoneLoginHeader
     border-bottom 1px solid #999
     .titleText
@@ -100,8 +99,8 @@ export default {
     width 100%
     height 54px
     text-align center
+    // margin-top 46px
     padding-top 46px
-    // overflow hidden
     >img
       width 162px
       height 54px
